@@ -1,6 +1,5 @@
-import random
 import tkinter
-
+import random
 
 class TicTacToe(tkinter.Canvas):
     def __init__(self, window):
@@ -50,7 +49,7 @@ class TicTacToe(tkinter.Canvas):
             column * 100 + 80, 
             row * 100 + 80,
             width=5,
-            fill='red
+            fill='dark blue'
         )
         self.create_line(
             column * 100 + 80, 
