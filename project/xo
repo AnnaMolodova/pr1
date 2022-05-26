@@ -1,0 +1,81 @@
+import tkinter
+import random
+
+class TicTacToe(tkinter.Canvas):
+    def __init__(self, window):
+        super().__init__(window, width=300, height=300)
+        self.state = [None, ] * 9
+        self.bind('<Button-1>', self.click)
+    
+    def get_winner(self):
+        var = []
+        for i, k in enumerate(range(0, 9, 3)):
+            var.append(self.state[k:k + 3])
+            var.append(self.state[i::3])
+        
+        var.append(self.state[::4])
+        var.append(self.state[2:7:2])
+        
+        if ['x', ] * 3 in var:
+            return 'x_win'
+        elif ['o', ] * 3 in var:
+            return 'o_win'
+        elif None not in self.state:
+            return 'draw'
+
+    def bot_move(self):
+        indexes = []
+        for index, e in enumerate(self.state):
+            if e is None:
+                indexes.append(index)
+        index = random.choice(indexes)
+        self.state[index] = 'o'
+        self.add_o(index % 3, int(index / 3))
+
+    def click(self, event):
+        column = int(event.x / 100)
+        row = int(event.y / 100)
+        index = row * 3 + column
+        if self.state[index] is None:
+            self.state[index] = 'x'
+            self.add_x(column, row)
+            self.bot_move()
+
+
+    def add_x(self, column, row):
+        self.create_line(
+            column * 100 + 20, 
+            row * 100 + 20,
+            column * 100 + 80, 
+            row * 100 + 80,
+            width=5,
+            fill='dark blue'
+        )
+        self.create_line(
+            column * 100 + 80, 
+            row * 100 + 20,
+            column * 100 + 20, 
+            row * 100 + 80,
+            width=5,
+            fill='dark blue'
+        )
+
+    def add_o(self, column, row):
+        self.create_oval(
+            column * 100 + 20, 
+            row * 100 + 20,
+            column * 100 + 80, 
+            row * 100 + 80,
+            width=5,
+            outline='dark salmon'
+        )
+    def darw_lines(self):
+        self.create_line(100, 0, 100, 300, fill='grey')
+        self.create_line(200, 0, 200, 300, fill='grey')
+        self.create_line(0, 100, 300, 100, fill='grey')
+        self.create_line(0, 200, 300, 200, fill='grey')
+tk_window = tkinter.Tk()
+game = TicTacToe(tk_window)
+game.pack()
+game.darw_lines()
+tk_window.mainloop()
