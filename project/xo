@@ -1,8 +1,9 @@
-import tkinter
 import random
+import tkinter
+
 
 class TicTacToe(tkinter.Canvas):
-    def __init__(self, window):
+    def __init__(slf, window):
         super().__init__(window, width=300, height=300)
         self.state = [None, ] * 9
         self.bind('<Button-1>', self.click)
@@ -57,10 +58,8 @@ class TicTacToe(tkinter.Canvas):
             column * 100 + 20, 
             row * 100 + 80,
             width=5,
-            fill='dark blue'
-        )
+            fill='red'        )
 
-    def add_o(self, column, row):
         self.create_oval(
             column * 100 + 20, 
             row * 100 + 20,
